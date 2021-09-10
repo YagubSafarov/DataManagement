@@ -15,7 +15,7 @@
         private TMPro.TextMeshProUGUI m_tmp;
         private TMPro.TMP_InputField m_tmpInput;
 
-        private void Awake()
+        private void Start()
         {
             m_tmp = GetComponent<TMPro.TextMeshProUGUI>();
             m_tmpInput = GetComponent<TMPro.TMP_InputField>();
