@@ -23,6 +23,8 @@
 
         protected virtual int GetDectiptedValue()
         {
+            if (string.IsNullOrEmpty(m_eValue))
+                return 0;
             return int.Parse(B64X.Decode(m_eValue));
         }
 

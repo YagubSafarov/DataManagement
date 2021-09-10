@@ -13,6 +13,9 @@
 
         protected virtual float GetDectiptedValue()
         {
+            if (string.IsNullOrEmpty(m_eValue))
+                return 0;
+
             return float.Parse(B64X.Decode(m_eValue));
         }
 
