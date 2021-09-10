@@ -1,0 +1,12 @@
+{
+  "name": "net.gameo.data-management",
+  "displayName": "Data Management",
+  "version": "0.0.1",
+  "unity": "2019.3",
+  "description": "",
+  "keywords": [],
+  "category": "",
+  "dependencies": {
+      "com.unity.textmeshpro": "3.0.6"
+  }
+}
