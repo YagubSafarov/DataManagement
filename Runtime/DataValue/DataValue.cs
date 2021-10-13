@@ -1,10 +1,14 @@
 ﻿namespace DataManagement
 {
     using EventManagement;
+    using Newtonsoft.Json;
 
+    [System.Serializable]
     public class DataValue<T>: IData, System.IDisposable
     {
+        [JsonProperty]
         protected T m_value;
+        [JsonProperty]
         protected string m_eventName;
 
         public DataValue(string eventName)
