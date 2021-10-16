@@ -82,5 +82,17 @@
                 DataRepository.Unregister(this);
             }
         }
+
+        public void Subscribe(System.Action<T> func)
+        {
+            if (!string.IsNullOrEmpty(m_eventName))
+                EventHandler.RegisterEvent<T>(m_eventName, func);
+        }
+
+        public void Unsubscribe(System.Action<T> func)
+        {
+            if (!string.IsNullOrEmpty(m_eventName))
+                EventHandler.UnregisterEvent<T>(m_eventName, func);
+        }
     }
 }
