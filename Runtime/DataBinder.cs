@@ -4,6 +4,8 @@
 
     public class DataBinder : MonoBehaviour
     {
+        public System.Action<string> OnChangeValue;
+
         [SerializeField]
         private string m_eventName;
         [SerializeField]
@@ -31,6 +33,7 @@
                 m_tmp.text = value;
             if (m_tmpInput)
                 m_tmpInput.text = value;
+            OnChangeValue?.Invoke(value);
         }
 
     }
