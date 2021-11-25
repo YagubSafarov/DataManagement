@@ -35,7 +35,7 @@
         public List<DataAnnotation> DataAnnotations = new List<DataAnnotation>();
 
 
-        [MenuItem("Tools/DataValue/Scan")]
+        [MenuItem("Tools/DataManagement/Scan")]
         private static void Scan()
         {
             Instance.DataAnnotations.Clear();
