@@ -1,7 +1,7 @@
 ﻿namespace DataManagement
 {
     using EventManagement;
-    using Newtonsoft.Json;
+    using Unity.Plastic.Newtonsoft.Json;
 
     [System.Serializable]
     public class DataValue<T>: IData, System.IDisposable
