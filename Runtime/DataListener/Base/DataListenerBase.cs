@@ -4,10 +4,10 @@
 
     public class DataListenerBase<T> : System.IDisposable
     {
-        private System.Action<string> m_onEventString;
+        private System.Action<object> m_onEventString;
         protected string m_enevtName;
 
-        protected DataListenerBase(string enevtName, System.Action<string> action)
+        protected DataListenerBase(string enevtName, System.Action<object> action)
         {
             m_enevtName = enevtName;
             m_onEventString = action;
@@ -23,10 +23,10 @@
 
         protected virtual void OnEvent(T value)
         {
-            CallEventString(value.ToString());
+            CallEvent(value);
         }
 
-        protected virtual void CallEventString(string value)
+        protected virtual void CallEvent(T value)
         {
             m_onEventString?.Invoke(value);
         }

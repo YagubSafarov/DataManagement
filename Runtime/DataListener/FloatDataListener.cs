@@ -6,7 +6,7 @@
     {
         public const string TYPE_NAME = "FloatDataListener";
 
-        public FloatDataListener(string enevtName, Action<string> action) : base(enevtName, action)
+        public FloatDataListener(string enevtName, Action<object> action) : base(enevtName, action)
         {
         }
     }

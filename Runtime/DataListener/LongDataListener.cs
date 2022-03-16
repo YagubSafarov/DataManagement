@@ -6,7 +6,7 @@
     {
         public const string TYPE_NAME = "LongDataListener";
 
-        public LongDataListener(string enevtName, Action<string> action) : base(enevtName, action)
+        public LongDataListener(string enevtName, Action<object> action) : base(enevtName, action)
         {
         }
     }

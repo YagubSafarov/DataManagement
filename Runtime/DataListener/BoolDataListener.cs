@@ -6,14 +6,8 @@
     {
         public const string TYPE_NAME = "BoolDataListener";
 
-        public BoolDataListener(string enevtName, Action<string> action) : base(enevtName, action)
+        public BoolDataListener(string enevtName, Action<object> action) : base(enevtName, action)
         {
         }
-
-        protected override void OnEvent(bool value)
-        {
-            CallEventString(value ? "1" : null);
-        }
-
     }
 }
