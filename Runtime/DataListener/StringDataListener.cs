@@ -6,7 +6,7 @@
     {
         public const string TYPE_NAME = "StringDataListener";
 
-        public StringDataListener(string enevtName, Action<string> action, string format = "") : base(enevtName, action, format)
+        public StringDataListener(string enevtName, Action<string> action) : base(enevtName, action)
         {
         }
     }

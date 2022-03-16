@@ -7,6 +7,5 @@
     {
         public string menuPath;
         public string eventName;
-        public string type;
     }
 }

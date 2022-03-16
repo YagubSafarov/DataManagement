@@ -4,21 +4,21 @@
     using UnityEngine;
     using UnityEditor;
 
-    [CustomEditor(typeof(DataBinder))]
+    [CustomEditor(typeof(DataBinderBase), true)]
     public class DataBinderInspector : Editor
     {
         private SerializedProperty t_eventName;
-        private SerializedProperty t_format;
-        private SerializedProperty t_type;
         private List<string[]> m_pathList;
 
 
         private void OnEnable()
         {
             t_eventName = serializedObject.FindProperty("m_eventName");
-            t_format = serializedObject.FindProperty("m_format");
-            t_type = serializedObject.FindProperty("m_type");
+            Reinit();
+        }
 
+        private void Reinit()
+        {
             m_pathList = new List<string[]>();
 
             foreach (var annotation in DataValueResource.Instance.DataAnnotations)
@@ -27,26 +27,15 @@
             }
         }
 
-        private string GetDataAnnotationTypeByEventName(string eventName)
-        {
-            foreach(var data in DataValueResource.Instance.DataAnnotations)
-            {
-                if (data.eventName == eventName)
-                    return data.type;
-            }
-            return null;
-        }
-
         public override void OnInspectorGUI()
         {
-            serializedObject.Update();
-            DataBinder m_Target = (DataBinder)target;
+            //serializedObject.Update();
+            DrawPropertiesExcluding(serializedObject, "m_eventName");
+            serializedObject.ApplyModifiedProperties();
+            DataBinderBase m_Target = (DataBinderBase)target;
 
             EditorGUI.BeginChangeCheck();
 
-
-            EditorGUILayout.PropertyField(t_type);
-            EditorGUILayout.PropertyField(t_format);
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_eventName);
@@ -67,6 +56,11 @@
             {
                 serializedObject.ApplyModifiedProperties();
             }
+            if(GUILayout.Button("Update events"))
+            {
+                DataValueResource.Scan();
+                Reinit();
+            }
         }
 
         void AddMenuItemForEvent(GenericMenu menu, string menuPath, string eventName)
@@ -77,7 +71,6 @@
         void OnEventNameSelected(object eventName)
         {
             t_eventName.stringValue = (string)eventName;
-            t_type.stringValue = GetDataAnnotationTypeByEventName((string)eventName);
             serializedObject.ApplyModifiedProperties();
         }
     }

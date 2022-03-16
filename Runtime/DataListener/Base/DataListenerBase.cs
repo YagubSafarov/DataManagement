@@ -4,15 +4,13 @@
 
     public class DataListenerBase<T> : System.IDisposable
     {
-        private System.Action<string> m_onEvent;
-        protected string m_format;
+        private System.Action<string> m_onEventString;
         protected string m_enevtName;
 
-        protected DataListenerBase(string enevtName, System.Action<string> action, string format = "")
+        protected DataListenerBase(string enevtName, System.Action<string> action)
         {
             m_enevtName = enevtName;
-            m_format = format;
-            m_onEvent = action;
+            m_onEventString = action;
 
             EventHandler.RegisterEvent<T>(m_enevtName, OnEvent);
             OnEvent((T)DataRepository.GetDataValue(enevtName));
@@ -25,12 +23,12 @@
 
         protected virtual void OnEvent(T value)
         {
-            CallEvent(value.ToString());
+            CallEventString(value.ToString());
         }
 
-        protected virtual void CallEvent(string value)
+        protected virtual void CallEventString(string value)
         {
-            m_onEvent?.Invoke(value);
+            m_onEventString?.Invoke(value);
         }
 
     }

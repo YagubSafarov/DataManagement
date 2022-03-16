@@ -6,13 +6,13 @@
     {
         public const string TYPE_NAME = "BoolDataListener";
 
-        public BoolDataListener(string enevtName, Action<string> action, string format = "") : base(enevtName, action, format)
+        public BoolDataListener(string enevtName, Action<string> action) : base(enevtName, action)
         {
         }
 
         protected override void OnEvent(bool value)
         {
-            CallEvent(value ? "1" : null);
+            CallEventString(value ? "1" : null);
         }
 
     }

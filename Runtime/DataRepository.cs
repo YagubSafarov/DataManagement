@@ -4,44 +4,44 @@
 
     public static class DataRepository
     {
-        private static Dictionary<string, System.Func<string, System.Action<string>, string, System.IDisposable>> ListenerEntity;
+        private static Dictionary<string, System.Func<string, System.Action<object>, System.IDisposable>> ListenerEntity;
         private static Dictionary<string, IData> DataEntity;
 
 
         static DataRepository()
         {
-            ListenerEntity = new Dictionary<string, System.Func<string, System.Action<string>, string, System.IDisposable>>();
+            ListenerEntity = new Dictionary<string, System.Func<string, System.Action<object>, System.IDisposable>>();
             DataEntity = new Dictionary<string, IData>();
 
-            ListenerEntity.Add(StringDataListener.TYPE_NAME, (enevtName, action, format) =>
+            ListenerEntity.Add(StringDataListener.TYPE_NAME, (enevtName, action) =>
             {
-                return new StringDataListener(enevtName, action, format);
+                return new StringDataListener(enevtName, action);
             });
 
-            ListenerEntity.Add(IntDataListener.TYPE_NAME, (enevtName, action, format) =>
+            ListenerEntity.Add(IntDataListener.TYPE_NAME, (enevtName, action) =>
             {
-                return new IntDataListener(enevtName, action, format);
+                return new IntDataListener(enevtName, action);
             });
 
-            ListenerEntity.Add(LongDataListener.TYPE_NAME, (enevtName, action, format) =>
+            ListenerEntity.Add(LongDataListener.TYPE_NAME, (enevtName, action) =>
             {
-                return new LongDataListener(enevtName, action, format);
+                return new LongDataListener(enevtName, action);
             });
 
-            ListenerEntity.Add(FloatDataListener.TYPE_NAME, (enevtName, action, format) =>
+            ListenerEntity.Add(FloatDataListener.TYPE_NAME, (enevtName, action) =>
             {
-                return new FloatDataListener(enevtName, action, format);
+                return new FloatDataListener(enevtName, action);
             });
         }
 
-        public static void Add(string type, System.Func<string, System.Action<string>, string, System.IDisposable> func)
+        public static void Add(string type, System.Func<string, System.Action<string>, System.IDisposable> func)
         {
             ListenerEntity.Add(type, func);
         }
 
-        public static System.IDisposable Get(string type, string enevtName, System.Action<string> action, string format = "")
+        public static System.IDisposable Get(string type, string enevtName, System.Action<object> action)
         {
-            return ListenerEntity[type].Invoke(enevtName, action, format);
+            return ListenerEntity[type].Invoke(enevtName, action);
         }
 
         public static void Register(IData data)

@@ -13,7 +13,8 @@
         {
             var temp = new GameObject();
 
-            var binder = temp.AddComponent<DataBinder>();
+            var binder = temp.AddComponent<DataBinderBase>();
+            
             MonoScript readerScript = MonoScript.FromMonoBehaviour(binder);
             if (MonoImporter.GetExecutionOrder(readerScript) != BinderExecOrder)
             {

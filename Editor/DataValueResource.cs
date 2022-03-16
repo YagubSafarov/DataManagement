@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System;
     using System.Reflection;
+    using System.Linq;
 
     public class DataValueResource : ScriptableObject
     {
@@ -36,64 +37,44 @@
 
 
         [MenuItem("Tools/DataManagement/Scan")]
-        private static void Scan()
+        public static void Scan()
         {
             Instance.DataAnnotations.Clear();
+            string assemblyFullName = typeof(DataBinderBase).Assembly.FullName;
 
-            foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
+           var types = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetReferencedAssemblies().Where(r => r.FullName == assemblyFullName).Count() > 0)
+                .SelectMany(s => s.GetTypes());
+
+            foreach (var type in types)
             {
-                if (ass.GetName().Name == "DataManagementEditor")
-                    continue;
-
-                if (ass.GetName().Name != "Assembly-CSharp")
+                var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                foreach (var field in fields)
                 {
-                    var refs = ass.GetReferencedAssemblies();
-                    bool isDependensy = false;
-                    foreach (var r in refs)
+                    try
                     {
-                        if (r.Name == "DataManagementRuntime")
+                        DataAnnotation dataAnnotation = field.GetCustomAttribute<DataAnnotation>();
+                        if (dataAnnotation != null)
                         {
-                            isDependensy = true;
-                            break;
+                            Instance.DataAnnotations.Add(dataAnnotation);
                         }
                     }
-
-                    if (!isDependensy)
-                        continue;
+                    catch { }
                 }
 
-                foreach (var type in ass.GetTypes())
+                var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+                foreach (var property in properties)
                 {
-                    var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-                    foreach (var field in fields)
+                    try
                     {
-                        try
+                        DataAnnotation dataAnnotation = property.GetCustomAttribute<DataAnnotation>();
+                        if (dataAnnotation != null)
                         {
-                            DataAnnotation dataAnnotation = field.GetCustomAttribute<DataAnnotation>();
-                            if (dataAnnotation != null)
-                            {
-                                Instance.DataAnnotations.Add(dataAnnotation);
-                            }
+                            Instance.DataAnnotations.Add(dataAnnotation);
                         }
-                        catch { }
                     }
-
-                    var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-                    foreach (var property in properties)
-                    {
-                        try
-                        {
-                            DataAnnotation dataAnnotation = property.GetCustomAttribute<DataAnnotation>();
-                            if (dataAnnotation != null)
-                            {
-                                Instance.DataAnnotations.Add(dataAnnotation);
-                            }
-                        }
-                        catch { }
-                    }
+                    catch { }
                 }
             }
-
 
             EditorUtility.SetDirty(Instance);
 
