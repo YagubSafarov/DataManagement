@@ -6,7 +6,7 @@
     {
         [SerializeField]
         protected string m_eventName;
-        [SerializeField]
+        [SerializeField, TextArea]
         private string m_format;
 
         protected string FormatString(string value)
