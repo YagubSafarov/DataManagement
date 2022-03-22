@@ -9,11 +9,11 @@
         [SerializeField, TextArea]
         private string m_format;
 
-        protected string FormatString(string value)
+        protected string FormatString(object value)
         {
             if (string.IsNullOrEmpty(m_format))
             {
-                return value;
+                return value.ToString();
             }
             return string.Format(m_format, value);
         }

@@ -15,7 +15,7 @@
 
         protected override void OnChangeString(string value)
         {
-            _text.text = FormatString(value);
+            _text.text = value;
         }
     }
 }

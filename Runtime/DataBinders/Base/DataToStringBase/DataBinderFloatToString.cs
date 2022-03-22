@@ -4,7 +4,7 @@
     {
         protected override void OnChangeFloat(float value)
         {
-            OnChangeString(value.ToString());
+            OnChangeString(FormatString(value));
         }
 
         protected abstract void OnChangeString(string value);
