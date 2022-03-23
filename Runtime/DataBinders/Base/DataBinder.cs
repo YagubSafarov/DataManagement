@@ -1,7 +1,5 @@
 ﻿namespace DataManagement
 {
-    using UnityEngine;
-
     public abstract class DataBinder<T> : DataBinderBase
     {
         public System.Action<T> OnChangeValue;
@@ -20,7 +18,8 @@
 
         protected virtual void OnDestroy()
         {
-            m_listener.Dispose();
+            if (m_listener != null)
+                m_listener.Dispose();
         }
 
         protected void Notify(T value)
